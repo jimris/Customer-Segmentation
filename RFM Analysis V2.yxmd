@@ -1,0 +1,940 @@
+<?xml version="1.0"?>
+<AlteryxDocument yxmdVer="10.5">
+  <Nodes>
+    <Node ToolID="20">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="798" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Customer_Number" action="GroupBy" rename="Customer_Number" />
+            <SummarizeField field="Customer_Name" action="GroupBy" rename="Customer_Name" />
+            <SummarizeField field="Start_Date" action="GroupBy" rename="Start_Date" />
+            <SummarizeField field="Date_key" action="Max" rename="Last Sale Date" />
+            <SummarizeField field="Order_Number" action="CountDistinct" rename="Order Count" />
+            <SummarizeField field="Sales" action="Sum" rename="Total Sales" />
+            <SummarizeField field="Sales" action="AvgNo0" rename="Average Sale" />
+            <SummarizeField field="Sales" action="MedianNo0" rename="Median Sale" />
+            <SummarizeField field="Sales" action="Percentile" rename="Percentile Sales">
+              <Percentile value="0.5" />
+            </SummarizeField>
+            <SummarizeField field="Date_key" action="Min" rename="First Sale Date" />
+            <SummarizeField field="Full_Date" action="Min" rename="Min_Full_Date" />
+            <SummarizeField field="Full_Date" action="Max" rename="Max_Full_Date" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText><![CDATA[Aggregate Sales Data
+]]></AnnotationText>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="21">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileInput.DbFileInput">
+        <Position x="54" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Passwords>4F4AF1B34AD0593C0AA200F9D15381BA83F0BD3E568BD28AAB4EF2854</Passwords>
+          <File RecordLimit="" FileFormat="18">odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101</File>
+          <FormatSpecificOptions>
+            <PreSQL />
+            <NoProgress>True</NoProgress>
+            <CacheData>True</CacheData>
+            <TableStyle>Quoted</TableStyle>
+            <ReadUncommitted>False</ReadUncommitted>
+            <PostSQL />
+          </FormatSpecificOptions>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name>Sales Data</Name>
+          <AnnotationText>Sales Data by Customer</AnnotationText>
+          <DefaultAnnotationText>Source=10.192.145.14\WSDWSTGPROD02
+Catalog=DW_BK
+Table=Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+        <MetaInfo connection="Output">
+          <RecordInfo>
+            <Field name="Customer_Number" size="10" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Customer_Name" size="50" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Date_key" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="Int32" />
+            <Field name="Order_Number" size="50" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Sales" scale="5" size="40" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="FixedDecimal" />
+            <Field name="QuantityShipped" scale="5" size="40" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="FixedDecimal" />
+            <Field name="Full_Date" size="10" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_WString" />
+            <Field name="Type_Name" size="50" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Type_Code" size="10" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Initials" size="5" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Sales_Area_Code" size="10" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Sales_Area_Name" size="50" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Full_Name" size="50" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_String" />
+            <Field name="Start_Date" size="10" source="File: odb:Provider=SQLOLEDB.1;Password=__EncPwd1__;Persist Security Info=True;User ID=elarochelle;Initial Catalog=DW_BK;Data Source=10.192.145.14\WSDWSTGPROD02;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation ID=ALTERYXVM;Use Encryption for Data=False;Tag with column collation when possible=False|Select a12.Customer_Number Customer_Number, a12.Customer_Name Customer_Name, a11.Order_Item_Invoice_Date_Key Date_key, a11.Order_Number Order_Number, Sum(a11.Extended_Price_Amount) Sales, Sum(a11.Item_Shipped_Quantity) QuantityShipped, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date From edw.f_Sales_Order_Item a11 Join edw.d_Customer a12 On (a11.Customer_Key = a12.Customer_Key) Join edw.d_Flags a13 On (a11.Is_Sales_Item_Flag_Key = a13.Flag_Key) Inner Join edw.d_Date On a11.Order_Item_Invoice_Date_Key = edw.d_Date.Date_Key Inner Join edw.d_Salesperson On a11.Salesperson_Key = edw.d_Salesperson.Salesperson_Key Where a13.Flag_Code = 'Y' Group By a12.Customer_Number, a12.Customer_Name, a11.Order_Item_Invoice_Date_Key, a11.Order_Number, edw.d_Date.Full_Date, a12.Type_Name, a12.Type_Code, edw.d_Salesperson.Initials, edw.d_Salesperson.Sales_Area_Code, edw.d_Salesperson.Sales_Area_Name, edw.d_Salesperson.Full_Name, a12.Start_Date Having a11.Order_Item_Invoice_Date_Key &gt; 20150101" type="V_WString" />
+          </RecordInfo>
+        </MetaInfo>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileInput" />
+    </Node>
+    <Node ToolID="22">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="234" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Expression>!Contains([Customer_Name] , "COLLECT")
+AND !StartsWith([Customer_Name] , "!")
+AND !Contains([Customer_Name] , "KROGER")
+AND !Contains([Customer_Name] , "WINN-DIXIE")
+AND !Contains([Customer_Name] , "WINN DIXIE")
+AND !Contains([Customer_Name] , "PUBLIX")
+AND !Contains([Customer_Name] , "WALMART")
+AND !Contains([Customer_Name] , "WAL-MART")
+AND !Contains([Customer_Name] , "WAL MART")
+AND !Contains([Customer_Name] , "CASH SALE")
+AND !Contains([Customer_Name] , "CERTIFIED TECH")
+AND [Customer_Number] != '0'</Expression>
+          <Mode>Custom</Mode>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>!Contains([Customer_Name] , "COLLECT")
+AND !StartsWith([Custo...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="23">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Tile.Tile">
+        <Position x="1182" y="198" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields orderChanged="False" />
+          <Method>EqualRecords</Method>
+          <EqualRecords>
+            <NumTiles value="5" />
+          </EqualRecords>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name>Sales Rank and Group</Name>
+          <AnnotationText><![CDATA[Sales Rank and Group
+]]></AnnotationText>
+          <DefaultAnnotationText>Equal Records</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTile" />
+    </Node>
+    <Node ToolID="29">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Tile.Tile">
+        <Position x="1374" y="294" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields orderChanged="False" />
+          <Method>EqualRecords</Method>
+          <EqualRecords>
+            <NumTiles value="5" />
+          </EqualRecords>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name>Order Count Rank and Group</Name>
+          <AnnotationText><![CDATA[Order Count Rank and Group
+]]></AnnotationText>
+          <DefaultAnnotationText>Equal Records</DefaultAnnotationText>
+          <Left value="True" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTile" />
+    </Node>
+    <Node ToolID="30">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Tile.Tile">
+        <Position x="1566" y="294" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields orderChanged="False" />
+          <Method>EqualRecords</Method>
+          <EqualRecords>
+            <NumTiles value="5" />
+          </EqualRecords>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name>Last Purchase Date Rank and Group</Name>
+          <AnnotationText><![CDATA[Last Purchase Date Rank and Group
+]]></AnnotationText>
+          <DefaultAnnotationText>Equal Records</DefaultAnnotationText>
+          <Left value="True" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTile" />
+    </Node>
+    <Node ToolID="31">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="1950" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField field="RFM Score" type="Double" size="8" expression="[RecencyGroup]*100+[OrderGroup]*10+[SalesGrouping]&#xA;" />
+            <FormulaField field="LRFM Score" type="Double" size="8" expression="[LengthGroup]*1000+[RecencyGroup]*100+[OrderGroup]*10+[SalesGrouping]" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>RFM Score=[RecencyGroup]*100+[OrderGroup]*10+[SalesGrouping]
+
+LRFM Score=[LengthGroup]*1000+[RecencyGroup]*100+[OrderGroup]...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="32">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="1854" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <SelectFields>
+            <SelectField field="Tile_Num" selected="True" rename="SalesGrouping" />
+            <SelectField field="Tile_Num2" selected="True" rename="OrderGroup" />
+            <SelectField field="Tile_Num3" selected="True" rename="RecencyGroup" />
+            <SelectField field="Tile_Num4" selected="True" rename="LengthGroup" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="33">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1086" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="Total Sales" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Total Sales - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="34">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1278" y="246" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="Order Count" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Order Count - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="35">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1470" y="294" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="Last Sale Date" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Last Sale Date - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="46">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2406" y="78" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="23">odbc:DSN=AlteryxMySQL - BakeBI|RFMAnalysis</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <TransactionSize>10000</TransactionSize>
+            <IgnoreDropTableSQLErrors>False</IgnoreDropTableSQLErrors>
+            <PostSQL />
+            <TableStyle>Quoted</TableStyle>
+            <PreSQL />
+            <TransactionMessages>False</TransactionMessages>
+            <OutputOption>Overwrite</OutputOption>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>DSN=AlteryxMySQL - BakeBI
+Table=RFMAnalysis</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="47">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="2046" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="True" />
+          <SelectFields>
+            <SelectField field="Customer_Number" selected="True" />
+            <SelectField field="Customer_Name" selected="True" />
+            <SelectField field="Start_Date" selected="True" />
+            <SelectField field="Order Count" selected="True" />
+            <SelectField field="Total Sales" selected="True" type="Double" size="8" />
+            <SelectField field="Average Sale" selected="True" />
+            <SelectField field="Median Sale" selected="True" />
+            <SelectField field="Percentile Sales" selected="True" />
+            <SelectField field="First Sale Date" selected="True" />
+            <SelectField field="Last Sale Date" selected="True" />
+            <SelectField field="LengthOfTime" selected="True" />
+            <SelectField field="SalesGrouping" selected="True" />
+            <SelectField field="Tile_SequenceNum" selected="True" rename="SalesRanking" />
+            <SelectField field="OrderGroup" selected="True" />
+            <SelectField field="Tile_SequenceNum2" selected="True" rename="OrderRanking" />
+            <SelectField field="RecencyGroup" selected="True" />
+            <SelectField field="Tile_SequenceNum3" selected="True" rename="RecencyRanking" />
+            <SelectField field="LengthGroup" selected="True" />
+            <SelectField field="Tile_SequenceNum4" selected="True" rename="LengthRanking" />
+            <SelectField field="RFM Score" selected="True" />
+            <SelectField field="LRFM Score" selected="True" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="48">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Tile.Tile">
+        <Position x="1758" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <GroupFields orderChanged="False" />
+          <Method>EqualRecords</Method>
+          <EqualRecords>
+            <NumTiles value="5" />
+          </EqualRecords>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText><![CDATA[Last Purchase Date Rank and Group
+]]></AnnotationText>
+          <DefaultAnnotationText>Equal Records</DefaultAnnotationText>
+          <Left value="True" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxTile" />
+    </Node>
+    <Node ToolID="49">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="1662" y="234" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="LengthOfTime" order="Descending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>LengthOfTime - Descending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="52">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="990" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField field="LengthOfTime" type="Int64" size="8" expression="DateTimeDiff(DateTimeParse([Last Sale Date],&quot;%Y%m%d&quot;),DateTimeParse([First Sale Date],&quot;%Y%m%d&quot;),&quot;days&quot;)" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>LengthOfTime=DateTimeDiff(DateTimeParse([Last Sale Date],"%Y%...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="53">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="2142" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="LengthGroup" action="GroupBy" rename="LengthGroup" />
+            <SummarizeField field="LengthOfTime" action="Min" rename="Min_LengthOfTime" />
+            <SummarizeField field="LengthOfTime" action="Max" rename="Max_LengthOfTime" />
+            <SummarizeField field="LengthOfTime" action="Avg" rename="Avg_LengthOfTime" />
+            <SummarizeField field="LengthOfTime" action="Median" rename="Median_LengthOfTime" />
+            <SummarizeField field="Customer_Number" action="CountDistinct" rename="CountDistinct_Customer_Number" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="54">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2238" y="54" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_3980_f6195386a35c4c44abdabcc167e45310_\Engine_4668_58031c8147034317b7e1fe874b5b1e9f_.yxdb</TempFile>
+          <Layout>
+            <View1>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="55">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="510" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField field="ThisOrder" type="Date" size="10" expression="[Full_Date]" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>ThisOrder=[Full_Date]</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="56">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.MultiRowFormula.MultiRowFormula">
+        <Position x="606" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <UpdateField value="False" />
+          <UpdateField_Name>Customer_Number</UpdateField_Name>
+          <CreateField_Name>LastOrder</CreateField_Name>
+          <CreateField_Type>Date</CreateField_Type>
+          <CreateField_Size>10</CreateField_Size>
+          <OtherRows>Empty</OtherRows>
+          <NumRows value="1" />
+          <Expression>IF [Row-1:Customer_Number] = [Customer_Number] THEN [Row-1:Full_Date] ELSE DateTimeParse("2012-01-03",'%Y-%m-%d') ENDIF</Expression>
+          <GroupByFields>
+            <Field field="Customer_Number" />
+            <Field field="Customer_Name" />
+          </GroupByFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>IF [Row-1:Customer_Number] = [Customer_Number] THEN [Row-1:Fu...</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxMultiRowFormula" />
+    </Node>
+    <Node ToolID="57">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Sort.Sort">
+        <Position x="414" y="102" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SortInfo locale="0">
+            <Field field="Customer_Number" order="Ascending" />
+            <Field field="Full_Date" order="Ascending" />
+          </SortInfo>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>Customer_Number - Ascending
+Full_Date - Ascending</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSort" />
+    </Node>
+    <Node ToolID="58">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Filter.Filter">
+        <Position x="702" y="258" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <Mode>Simple</Mode>
+          <Simple>
+            <Field>LastOrder</Field>
+            <Operator>!=</Operator>
+            <Operands>
+              <Operand>2015-03-31</Operand>
+            </Operands>
+          </Simple>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>[LastOrder] != "2015-03-31"</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFilter" />
+    </Node>
+    <Node ToolID="59">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="486" y="390" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField field="RFM Score" type="Double" size="8" expression="999" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>RFM Score=999</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="60">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Union.Union">
+        <Position x="2142" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <ByName_ErrorMode>Warning</ByName_ErrorMode>
+          <ByName_OutputMode>All</ByName_OutputMode>
+          <Mode>ByName</Mode>
+          <SetOutputOrder value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxUnion" />
+    </Node>
+    <Node ToolID="61">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="726" y="390" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <SelectFields>
+            <SelectField field="Total Sales" selected="True" type="Double" size="8" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="62">
+      <GuiSettings Plugin="AlteryxSpatialPluginsGui.Summarize.Summarize">
+        <Position x="342" y="402" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <SummarizeFields>
+            <SummarizeField field="Customer_Number" action="GroupBy" rename="Customer_Number" />
+            <SummarizeField field="Customer_Name" action="GroupBy" rename="Customer_Name" />
+            <SummarizeField field="Start_Date" action="GroupBy" rename="Start_Date" />
+            <SummarizeField field="Date_key" action="Max" rename="Last Sale Date" />
+            <SummarizeField field="Order_Number" action="CountDistinct" rename="Order Count" />
+            <SummarizeField field="Sales" action="Sum" rename="Total Sales" />
+            <SummarizeField field="Sales" action="AvgNo0" rename="Average Sale" />
+            <SummarizeField field="Sales" action="MedianNo0" rename="Median Sale" />
+            <SummarizeField field="Sales" action="Percentile" rename="Percentile Sales">
+              <Percentile value="0.5" />
+            </SummarizeField>
+            <SummarizeField field="Date_key" action="Min" rename="First Sale Date" />
+          </SummarizeFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <AnnotationText><![CDATA[Aggregate Sales Data
+]]></AnnotationText>
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxSpatialPluginsEngine.dll" EngineDllEntryPoint="AlteryxSummarize" />
+    </Node>
+    <Node ToolID="63">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="2238" y="306" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_3980_f6195386a35c4c44abdabcc167e45310_\Engine_4668_e61ccd8251634ec1ac10b24974d9f11b_.yxdb</TempFile>
+          <Layout>
+            <View1>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="64">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="330" y="78" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_3980_f6195386a35c4c44abdabcc167e45310_\Engine_4668_11f7b7b9c2e64f1b9bdd9963de8807d0_.yxdb</TempFile>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="65">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.BrowseV2.BrowseV2">
+        <Position x="330" y="150" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <TempFile>C:\ProgramData\Alteryx\Engine\Engine_3980_f6195386a35c4c44abdabcc167e45310_\Engine_4668_febad34c1b7d498280d417f47ab7be78_.yxdb</TempFile>
+          <Layout>
+            <View1>
+              <Hints>
+                <Table />
+              </Hints>
+            </View1>
+          </Layout>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxBrowseV2" />
+    </Node>
+    <Node ToolID="66">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.DbFileOutput.DbFileOutput">
+        <Position x="2454" y="222" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <File MaxRecords="" FileFormat="0">C:\Projects\Segmentation\RFMScoresUpload.csv</File>
+          <Passwords />
+          <FormatSpecificOptions>
+            <LineEndStyle>CRLF</LineEndStyle>
+            <Delimeter>,</Delimeter>
+            <ForceQuotes>False</ForceQuotes>
+            <HeaderRow>True</HeaderRow>
+            <CodePage>28591</CodePage>
+          </FormatSpecificOptions>
+          <MultiFile value="False" />
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>RFMScoresUpload.csv</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxDbFileOutput" />
+    </Node>
+    <Node ToolID="67">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.Formula.Formula">
+        <Position x="2238" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <FormulaFields>
+            <FormulaField field="RFMCalcDate" type="Date" size="10" expression="DateTimeNow()" />
+          </FormulaFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText>RFMCalcDate=DateTimeNow()</DefaultAnnotationText>
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxFormula" />
+    </Node>
+    <Node ToolID="68">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="150" y="114" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <SelectFields>
+            <SelectField field="Full_Date" selected="True" type="Date" size="10" />
+            <SelectField field="*Unknown" selected="True" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+    <Node ToolID="69">
+      <GuiSettings Plugin="AlteryxBasePluginsGui.AlteryxSelect.AlteryxSelect">
+        <Position x="2322" y="210" />
+      </GuiSettings>
+      <Properties>
+        <Configuration>
+          <OrderChanged value="False" />
+          <SelectFields>
+            <SelectField field="Customer_Number" selected="True" />
+            <SelectField field="RFM Score" selected="True" />
+            <SelectField field="RFMCalcDate" selected="True" />
+            <SelectField field="*Unknown" selected="False" />
+          </SelectFields>
+        </Configuration>
+        <Annotation DisplayMode="0">
+          <Name />
+          <DefaultAnnotationText />
+          <Left value="False" />
+        </Annotation>
+      </Properties>
+      <EngineSettings EngineDll="AlteryxBasePluginsEngine.dll" EngineDllEntryPoint="AlteryxSelect" />
+    </Node>
+  </Nodes>
+  <Connections>
+    <Connection>
+      <Origin ToolID="20" Connection="Output" />
+      <Destination ToolID="52" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="21" Connection="Output" />
+      <Destination ToolID="68" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="22" Connection="True" />
+      <Destination ToolID="57" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="22" Connection="False" />
+      <Destination ToolID="62" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="22" Connection="True" />
+      <Destination ToolID="64" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="22" Connection="False" />
+      <Destination ToolID="65" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="23" Connection="Output" />
+      <Destination ToolID="34" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="29" Connection="Output" />
+      <Destination ToolID="35" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="30" Connection="Output" />
+      <Destination ToolID="49" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="31" Connection="Output" />
+      <Destination ToolID="47" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="32" Connection="Output" />
+      <Destination ToolID="31" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="33" Connection="Output" />
+      <Destination ToolID="23" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="34" Connection="Output" />
+      <Destination ToolID="29" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="35" Connection="Output" />
+      <Destination ToolID="30" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="47" Connection="Output" />
+      <Destination ToolID="53" Connection="Input" />
+    </Connection>
+    <Connection name="#1">
+      <Origin ToolID="47" Connection="Output" />
+      <Destination ToolID="60" Connection="Input" />
+    </Connection>
+    <Connection name="#2">
+      <Origin ToolID="61" Connection="Output" />
+      <Destination ToolID="60" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="48" Connection="Output" />
+      <Destination ToolID="32" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="49" Connection="Output" />
+      <Destination ToolID="48" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="52" Connection="Output" />
+      <Destination ToolID="33" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="53" Connection="Output" />
+      <Destination ToolID="54" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="55" Connection="Output" />
+      <Destination ToolID="56" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="56" Connection="Output" />
+      <Destination ToolID="58" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="56" Connection="Output" />
+      <Destination ToolID="20" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="57" Connection="Output" />
+      <Destination ToolID="55" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="59" Connection="Output" />
+      <Destination ToolID="61" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="60" Connection="Output" />
+      <Destination ToolID="63" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="60" Connection="Output" />
+      <Destination ToolID="67" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="62" Connection="Output" />
+      <Destination ToolID="59" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="67" Connection="Output" />
+      <Destination ToolID="46" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="67" Connection="Output" />
+      <Destination ToolID="69" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="68" Connection="Output" />
+      <Destination ToolID="22" Connection="Input" />
+    </Connection>
+    <Connection>
+      <Origin ToolID="69" Connection="Output" />
+      <Destination ToolID="66" Connection="Input" />
+    </Connection>
+  </Connections>
+  <Properties>
+    <Memory default="True" />
+    <GlobalRecordLimit value="0" />
+    <TempFiles default="True" />
+    <Annotation on="True" includeToolName="False" />
+    <ConvErrorLimit value="10" />
+    <ConvErrorLimit_Stop value="False" />
+    <CancelOnError value="False" />
+    <DisableBrowse value="False" />
+    <EnablePerformanceProfiling value="False" />
+    <DisableAllOutput value="False" />
+    <ShowAllMacroMessages value="False" />
+    <ShowConnectionStatusIsOn value="True" />
+    <ShowConnectionStatusOnlyWhenRunning value="True" />
+    <ZoomLevel value="0" />
+    <LayoutType>Horizontal</LayoutType>
+    <MetaInfo>
+      <NameIsFileName value="True" />
+      <Name>RFM Analysis V2</Name>
+      <Description />
+      <RootToolName />
+      <ToolVersion />
+      <ToolInDb value="False" />
+      <CategoryName />
+      <SearchTags />
+      <Author />
+      <Company />
+      <Copyright />
+      <DescriptionLink actual="" displayed="" />
+    </MetaInfo>
+    <Events>
+      <Enabled value="True" />
+    </Events>
+  </Properties>
+</AlteryxDocument>
